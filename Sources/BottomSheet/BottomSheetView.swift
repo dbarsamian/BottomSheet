@@ -14,6 +14,7 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
     
     private let resizeable: Bool
     private let showCancelButton: Bool
+    private let tapToExpand: Bool
     private let headerContent: hContent?
     private let mainContent: mContent
     private let closeAction: () -> ()
@@ -40,7 +41,7 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
                                     DragGesture()
                                         .onChanged { value in
                                             if resizeable {
-                                                self.translation = value.translation.height
+                                                self.translation = value.predictedEndTranslation.height
                                             }
                                         }
                                         .onEnded { value in
@@ -57,6 +58,11 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
                                             }
                                         }
                                 )
+                                .onTapGesture {
+                                    if tapToExpand && bottomSheetPosition != .top {
+                                        bottomSheetPosition = .top
+                                    }
+                                }
                         }
                         
                         Spacer()
@@ -91,7 +97,7 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
                         DragGesture()
                             .onChanged { value in
                                 if resizeable {
-                                    self.translation = value.translation.height
+                                    self.translation = value.predictedEndTranslation.height
                                 }
                             }
                             .onEnded { value in
@@ -103,7 +109,6 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
                                             self.switchPositionDown()
                                         }
                                     }
-                                    
                                     self.translation = 0
                                 }
                             }
@@ -157,10 +162,11 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
     }
     
     
-    fileprivate init(bottomSheetPosition: Binding<BottomSheetPosition>, resizeable: Bool = true, showCancelButton: Bool = false, @ViewBuilder headerContent: () -> hContent?, @ViewBuilder mainContent: () -> mContent, closeAction: @escaping () -> () = {}) {
+    fileprivate init(bottomSheetPosition: Binding<BottomSheetPosition>, resizeable: Bool = true, showCancelButton: Bool = false, tapToExpand: Bool = false, @ViewBuilder headerContent: () -> hContent?, @ViewBuilder mainContent: () -> mContent, closeAction: @escaping () -> () = {}) {
         self._bottomSheetPosition = bottomSheetPosition
         self.resizeable = resizeable
         self.showCancelButton = showCancelButton
+        self.tapToExpand = tapToExpand
         self.headerContent = headerContent()
         self.mainContent = mainContent()
         self.closeAction = closeAction
