@@ -198,6 +198,11 @@ public extension View {
             BottomSheetView(bottomSheetPosition: bottomSheetPosition, resizeable: resizeable, showCancelButton: showCancelButton, title: title, content: content, closeAction: closeAction)
         }
     }
+    
+    func bottomSheet<hContent: View, mContent: View>(bottomSheetPosition: Binding<BottomSheetPosition>, resizable: Bool = true, showCancelButton: Bool = false, tapToExpand: Bool = false, @ViewBuilder headerContent: () -> hContent?, @ViewBuilder mainContent: () -> mContent, closeAction: @escaping () -> () = {}) {
+        self
+        BottomSheetView(bottomSheetPosition: bottomSheetPosition, resizeable: resizable, showCancelButton: showCancelButton, tapToExpand: tapToExpand, headerContent: headerContent, mainContent: mainContent, closeAction: closeAction)
+    }
 }
 
 struct BottomSheetView_Previews: PreviewProvider {
