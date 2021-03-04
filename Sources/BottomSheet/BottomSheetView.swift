@@ -198,7 +198,7 @@ struct BottomSheetView_Previews: PreviewProvider {
     static var previews: some View {
         Color.black
             .edgesIgnoringSafeArea(.all)
-            .bottomSheet(bottomSheetPosition: .constant(.middle), resizeable: true, showCancelButton: true, headerContent: {
+            .bottomSheet(bottomSheetPosition: .constant(.bottom), resizeable: true, showCancelButton: true, headerContent: {
                 HStack {
                     Spacer(minLength: 10)
                     Text("Header")
