@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/github/license/LucasMucGH/BottomSheet)](https://github.com/LucasMucGH/BottomSheet/blob/main/LICENSE)
 [![Issues](https://img.shields.io/github/issues/LucasMucGH/BottomSheet)](https://github.com/LucasMucGH/BottomSheet/issues)
 
+## ⚠️ This is a fork of the original repository by LucasMucGH. For the original repository, please go to [https://github.com/LucasMucGH/BottomSheet](https://github.com/LucasMucGH/BottomSheet).
+
 A sliding Sheet from the bottom of the Screen with 3 States build with SwiftUI
 
 - [Why](#why) 
