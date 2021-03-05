@@ -23,15 +23,15 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 if self.resizeable {
-                    Button(action: {
-                        self.switchPositionIndicator()
-                    }) {
-                        Capsule()
-                            .fill(Color.tertiaryLabel)
-                            .frame(width: 40, height: 6)
-                    }
-                    .padding(.top, 10)
-                    .contentShape(Capsule())
+                    Capsule()
+                        .fill(Color.tertiaryLabel)
+                        .frame(width: 40, height: 6)
+                        .padding(.top, 10)
+                        .contentShape(Capsule())
+                        .onTapGesture {
+                            self.switchPositionIndicator()
+                        }
+                        
                 }
                 if self.headerContent != nil || self.showCancelButton {
                     HStack(spacing: 0) {
@@ -209,25 +209,33 @@ public extension View {
 
 struct BottomSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        Color.black
-            .edgesIgnoringSafeArea(.all)
-            .bottomSheet(bottomSheetPosition: .constant(.bottom), resizeable: true, showCancelButton: true, headerContent: {
-                HStack {
-                    Spacer(minLength: 10)
-                    Text("Header")
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 10.0).foregroundColor(.blue))
-                    Spacer(minLength: 10)
-                }
-            }, mainContent: {
-                ScrollView {
-                    ForEach(0..<150) { index in
-                        Text(String(index))
+        PreviewView()
+    }
+    
+    struct PreviewView: View {
+        @State(initialValue: .bottom) var position: BottomSheetPosition
+        
+        var body: some View {
+            Color.black
+                .edgesIgnoringSafeArea(.all)
+                .bottomSheet(bottomSheetPosition: $position, resizeable: true, showCancelButton: true, headerContent: {
+                    HStack {
+                        Spacer(minLength: 10)
+                        Text("Header")
+                            .foregroundColor(.white)
+                            .font(.largeTitle)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 10.0).foregroundColor(.blue))
+                        Spacer(minLength: 10)
                     }
-                    .frame(maxWidth: .infinity)
-                }
-            }, closeAction: {})
+                }, mainContent: {
+                    ScrollView {
+                        ForEach(0..<150) { index in
+                            Text(String(index))
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                }, closeAction: {})
+        }
     }
 }
