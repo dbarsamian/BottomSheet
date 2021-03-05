@@ -91,7 +91,7 @@ fileprivate struct BottomSheetView<hContent: View, mContent: View>: View {
                         DragGesture()
                             .onChanged { value in
                                 if resizeable {
-                                    self.translation = value.predictedEndTranslation.height
+                                    self.translation = value.translation.height
                                 }
                             }
                             .onEnded { value in
